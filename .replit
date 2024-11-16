@@ -1,0 +1,8 @@
+modules = ["bash", "bun-1.1"]
+run = "~/ascenda-hotel/runner.sh iJhz"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "~/ascenda-hotel/runner.sh iJhz"]
