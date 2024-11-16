@@ -29,7 +29,7 @@ async function main() {
               return s.unify(unifier, rawHotel);
             } catch (e) {
               console.error(
-                `Failed to unify data from ${s.origin.split("/")[-1]}`,
+                `Failed to unify data from ${s.name}: the data\n${rawHotel}`,
                 e,
               );
               return null;
@@ -37,7 +37,7 @@ async function main() {
           });
           return hotels;
         } catch (e) {
-          console.error(`Failed to fetch from ${s.origin.split("/")[-1]}`, e);
+          console.error(`Failed to fetch from ${s.name}`, e);
           return null;
         }
       }),
@@ -56,16 +56,27 @@ async function main() {
   const hotelIds = rawHotelIds !== "none" ? rawHotelIds.split(" ") : [];
   const destinationIds =
     rawDestinationIds && rawDestinationIds !== "none"
-      ? rawDestinationIds.split(" ")
+      ? rawDestinationIds.split(" ").map((id) => parseInt(id))
       : [];
 
   // filter hotels based on arguments
-  const filteredHotels = mergedHotels.filter((hotel) => {
-    if (hotelIds.length > 0 && hotel.id && hotelIds.includes(hotel.id)) {
-      return true;
-    }
-    return false;
-  });
+  const filteredHotels = mergedHotels
+    .filter((hotel) => {
+      if (hotelIds.length > 0 && hotel.id && hotelIds.includes(hotel.id)) {
+        return true;
+      }
+      return false;
+    })
+    .filter((hotel) => {
+      if (
+        destinationIds.length > 0 &&
+        hotel.destination_id &&
+        destinationIds.includes(hotel.destination_id)
+      ) {
+        return true;
+      }
+      return false;
+    });
 
   // write to file
   fs.writeFileSync("output.json", JSON.stringify(filteredHotels, null, 2));

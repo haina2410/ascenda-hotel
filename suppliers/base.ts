@@ -4,7 +4,7 @@ import type { HotelUnifiable, HotelUnifier } from "../unify";
 import type { Hotel } from "../types";
 
 export default abstract class BaseSupplier implements HotelUnifiable {
-  origin: string;
+  protected origin: string;
   protected _name: string;
 
   constructor(origin: string) {
