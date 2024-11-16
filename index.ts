@@ -59,23 +59,25 @@ async function main() {
       ? rawDestinationIds.split(" ").map((id) => parseInt(id))
       : [];
 
+  console.log(hotelIds, destinationIds);
+
   // filter hotels based on arguments
   const filteredHotels = mergedHotels
     .filter((hotel) => {
-      if (hotelIds.length > 0 && hotel.id && hotelIds.includes(hotel.id)) {
-        return true;
+      if (hotelIds.length > 0 && hotel.id && !hotelIds.includes(hotel.id)) {
+        return false;
       }
-      return false;
+      return true;
     })
     .filter((hotel) => {
       if (
         destinationIds.length > 0 &&
         hotel.destination_id &&
-        destinationIds.includes(hotel.destination_id)
+        !destinationIds.includes(hotel.destination_id)
       ) {
-        return true;
+        return false;
       }
-      return false;
+      return true;
     });
 
   // write to file
