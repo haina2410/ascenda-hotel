@@ -59,7 +59,6 @@ async function main() {
       ? rawDestinationIds.split(" ").map((id) => parseInt(id))
       : [];
 
-  console.log(hotelIds, destinationIds);
 
   // filter hotels based on arguments
   const filteredHotels = mergedHotels
