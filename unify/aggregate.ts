@@ -2,10 +2,8 @@ import { type Hotel } from "../types";
 
 function deepMerge(target: any, source: any) {
   if (Array.isArray(target) && Array.isArray(source)) {
-    // Merge arrays by concatenating and removing duplicates
     return Array.from(new Set([...target, ...source]));
   } else if (isObject(target) && isObject(source)) {
-    // Merge objects recursively
     for (const key in source) {
       if (source[key] !== null && source[key] !== undefined) {
         if (key in target) {
@@ -31,8 +29,8 @@ export default function mergeData(hotels: Hotel[]) {
   hotels.forEach((hotel) => {
     const { id } = hotel;
     if (!id) return;
+
     if (!mergedObjects[id]) {
-      // Initialize the object if it doesn't exist
       mergedObjects[id] = { ...hotel };
     } else {
       // Deep merge objects
